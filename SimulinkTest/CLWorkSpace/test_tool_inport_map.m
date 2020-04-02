@@ -29,7 +29,7 @@ open_system(model);
 vars = find_undefined_variables(model);
 names = find_names_of_inports(model);
 
-test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, Start_time, Stop_time, Sample_time);
+test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, Start_time, Sample_time, Stop_time);
 save('t.mat', 'test_ds');
 
 close_system(model);

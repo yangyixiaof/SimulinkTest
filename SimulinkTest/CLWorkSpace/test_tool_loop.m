@@ -9,7 +9,7 @@ while 1
     test_ds_const = generate_random_constant(vars, specified_data_shape, default_data_shape);
     transfer_dataset_to_workspace(test_ds_const);
 
-    test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, Start_time, Stop_time, Sample_time);
+    test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, Start_time, Sample_time, Stop_time);
     % save('t.mat', 'test_ds');
     % load('t.mat');
     [cvdo, simOut] = cvsim(model);
