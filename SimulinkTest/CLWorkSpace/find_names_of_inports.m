@@ -9,7 +9,7 @@ function names = find_names_of_inports(modelName)
         % disp(pos);
         if length(pos) == 1
             name = inport(pos+1:strlength(inport));
-            names = [names name];
+            names = [names string(name)];
         end
     end
 end

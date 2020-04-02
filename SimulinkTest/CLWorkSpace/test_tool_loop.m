@@ -6,13 +6,12 @@ all_cov = [];
 t1 = clock;
 while 1
     %generate test cases
-    vars = find_undefined_variables(model);
     test_ds_const = generate_random_constant(vars, specified_data_shape, default_data_shape);
     transfer_dataset_to_workspace(test_ds_const);
 
     test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, Start_time, Stop_time, Sample_time);
-    save('t.mat', 'test_ds');
-    load('t.mat');
+    % save('t.mat', 'test_ds');
+    % load('t.mat');
     [cvdo, simOut] = cvsim(model);
     if isempty(all_cov)
         all_cov = cvdo;
@@ -26,7 +25,9 @@ while 1
         disp(['Coverage Increased:', cov_val]);
     end
     t2 = clock;
-    if t2 - t1 > test_time
+    cost = etime(t2, t1);
+    % disp(cost);
+    if cost > test_time
         break;
     end
 end

@@ -12,7 +12,8 @@ function undefinedVars = find_undefined_variables(modelName)
             if ~isempty(leaf_err) && (strcmp(leaf_err.identifier,'SLDD:sldd:VarMissingBase') || strcmp(leaf_err.identifier,'SLDD:sldd:VarDeletedBaseWithoutValueRecorded'))
                 varName = regexp(leaf_err.message,'Variable ''(\w+)''','tokens');
                 if ~isempty(varName)
-                    undefinedVars = [undefinedVars varName{1}];
+                    % disp(class(varName{1}))
+                    undefinedVars = [undefinedVars string(varName{1}{1})];
                     evalin('base',[varName{1}{1},'=1;']);
                 end
                 % Display any other errors as usual.

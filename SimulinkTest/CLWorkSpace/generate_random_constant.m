@@ -8,6 +8,7 @@ function test_ds = generate_random_constant(names, specified_data_shape, default
             t_data_shape = specified_data_shape.(name);
         end
         t_data = rand(t_data_shape);
+        % disp(class(name));
         test_ds = test_ds.addElement(t_data, name);
         % disp(name);
     end
