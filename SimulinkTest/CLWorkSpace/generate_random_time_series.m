@@ -1,4 +1,4 @@
-function test_ds = generate_random_time_series(names, specified_data_shape, default_data_shape, start_t, gap_t, end_t)
+function test_ds = generate_random_time_series(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape, start_t, gap_t, end_t)
     test_ds = Simulink.SimulationData.Dataset();
     n = length(names);
     for i=1:n

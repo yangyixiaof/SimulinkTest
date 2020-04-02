@@ -1,4 +1,4 @@
-function test_ds = generate_random_constant(names, specified_data_shape, default_data_shape)
+function test_ds = generate_random_constant(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape)
     test_ds = Simulink.SimulationData.Dataset();
     n = length(names);
     for i=1:n
