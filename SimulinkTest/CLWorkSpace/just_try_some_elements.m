@@ -18,6 +18,11 @@ t2=clock;
 tt = etime(t2,t1);
 disp(tt);
 
+disp(intmax("int8"));
+disp(intmin("int8"));
 
+disp(randi([0,1],[6,1]))
+disp("====");
+disp(randi([intmin("int8"),intmax("int8")],[6,1]))
 
 
