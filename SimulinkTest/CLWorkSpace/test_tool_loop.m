@@ -8,10 +8,29 @@ while 1
     %generate test cases
     test_ds_const = generate_random_constant(vars, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range);
     transfer_dataset_to_workspace(test_ds_const);
+    
+%     vars = [];
+%     for i=1:length(names)
+%         var = strcat('test_sig', num2str(i));
+%         vars = [vars, string(var)];
+%         eval(strcat(var, '=generate_random_time_series(names{i}, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);'));
+%     end
+%     % test_ds = generate_random_time_series(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);
+%     save('t.mat', vars);
 
-    test_ds = generate_random_time_series(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);
-    % save('t.mat', 'test_ds');
-    % load('t.mat');
+    t = Simulink.SimulationData.Dataset();
+    % save_vars_cmd = 'save(''t.mat''';
+    for i=1:length(names)
+        var = strcat('test_sig', num2str(i));
+        % save_vars_cmd = strcat(save_vars_cmd, ',''', var, '''');
+        eval(strcat(var, '=generate_random_time_series(names{i}, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);'));
+        eval(strcat('t = t.addElement(', var, ',''', var, '''', ');'));
+    end
+    % save_vars_cmd = strcat(save_vars_cmd, ');');
+    % eval(save_vars_cmd);
+    save('t.mat', 't');
+
+    load('t.mat');
     [cvdo, simOut] = cvsim(model);
     if isempty(all_cov)
         all_cov = cvdo;

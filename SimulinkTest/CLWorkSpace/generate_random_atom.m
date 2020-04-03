@@ -9,7 +9,7 @@ function t_data = generate_random_atom(t_data_type, t_data_shape, t_data_range)
                 t_data = randi(t_data_range,t_data_shape);
             end
         case {"boolean"}
-            t_data = logical(randi([0,1],t_data_shape));
+            t_data = randi([0,1],t_data_shape);
         otherwise
             assert(0, strcat("strange error! uncognized type:", t_data_type));
     end
