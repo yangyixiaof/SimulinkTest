@@ -1,7 +1,7 @@
 function t_data = generate_random_atom(t_data_type, t_data_shape, t_data_range)
     switch (t_data_type)
         case {"single", "double"}
-            t_data = t_data_range{1} + (t_data_range{2}-t_data_range{1}) * rand(t_data_shape, t_data_type);
+            t_data = t_data_range(1) + (t_data_range(2)-t_data_range(1)) * rand(t_data_shape, t_data_type);
         case {"int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64"}
             if rand() > 0.6
                 t_data = randi([intmin(t_data_type),intmax(t_data_type)],t_data_shape);
