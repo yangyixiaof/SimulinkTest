@@ -6,8 +6,8 @@ function [specified_data_type, specified_data_shape, specified_data_range] = spe
         h = get_param(in,'Porthandles');
         data_type = get_param(h.Outport,'CompiledPortDataType');
         dimensions = get_param(h.Outport,'CompiledPortDimensions');
-        specified_data_type.(in_name) = data_type;
-        specified_data_shape.(in_name) = dimensions;
+        specified_data_type = addElement(specified_data_type, data_type, in_name);
+        specified_data_shape = addElement(specified_data_shape, dimensions, in_name);
         % disp(data_type);
         % disp(class(data_type));
         % disp(dimensions);

@@ -7,7 +7,7 @@ end
 function t_d = choose_one_data_type_shape_range(name, specified_d, default_d)
     t_d = default_d;
     if isfield(specified_d, name)
-        t_d = specified_d.(name);
+        t_d = get(specified_d, name);
     end
 end
 
