@@ -6,14 +6,14 @@ Stop_time  = 20;
 Sample_time = 0.1;
 
 default_data_shape = [1,1];
-specified_data_shape = Simulink.SimulationData.Dataset();
+specified_data_shape = containers.Map();
 default_data_type = 'double';
-specified_data_type = Simulink.SimulationData.Dataset();
+specified_data_type = containers.Map();
 default_data_range = [-10,10];
-specified_data_range = Simulink.SimulationData.Dataset();
+specified_data_range = containers.Map();
 
 test_time = 20;
 
-model = 'test';
+model = 'Control_Logic_b';
 
 
