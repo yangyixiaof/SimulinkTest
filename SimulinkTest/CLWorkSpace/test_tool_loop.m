@@ -32,6 +32,8 @@ while 1
 
     load('t.mat');
     [cvdo, simOut] = cvsim(model);
+    disp('== one turn executed ==');
+    
     if isempty(all_cov)
         all_cov = cvdo;
     else
@@ -41,7 +43,7 @@ while 1
     temp_cov_val = 100 * cov(1) / cov(2);
     if temp_cov_val > cov_val
         cov_val = temp_cov_val;
-        disp(['Coverage Increased:', cov_val]);
+        disp(strcat('Coverage Increased: ', num2str(cov_val)));
     end
     t2 = clock;
     cost = etime(t2, t1);
