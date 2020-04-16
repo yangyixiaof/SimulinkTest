@@ -31,7 +31,9 @@ while 1
     save('t.mat', 't');
 
     load('t.mat');
-    [cvdo, simOut] = cvsim(model);
+    ct = cvtest(model);
+    ct.settings.condition = 1;
+    [cvdo, simOut] = cvsim(ct);
     disp('== one turn executed ==');
     
     if isempty(all_cov)
