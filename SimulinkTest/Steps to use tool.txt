@@ -1,0 +1,16 @@
+1. run test_tool_initialize.m; 
+        All necessary settings are in that file.
+2. run test_tool_inport_map; 
+        In this step, all variables are generated in the base workspace.
+        The necessary signals prefixed with "test_sig" are generated. 
+        Then, we need to map the generated signals to root input port. 
+        Open Model Setting, choose Data Import/Export. 
+        Select Connect Input, choose From WorkSpace. 
+        Select all generated signals prefixed with "test_sig" in this UI. 
+        In MAP TO MODEL section, click Port Order, In Options section, select Update Model. 
+        Choose the left generated signals and click Map to Model. 
+        The process will be automatically over. 
+        Then, choose Mark for Simulation. 
+        Save the files. 
+3. run test_tool_loop.m;
+        The testing procedure starts and will last for the specific time designed in test_tool_initialize.m;

@@ -39,7 +39,7 @@ while 1
     else
         all_cov = all_cov + cvdo;
     end
-    cov = decisioninfo(all_cov, model);
+    cov = conditioninfo(all_cov, model);
     temp_cov_val = 100 * cov(1) / cov(2);
     if temp_cov_val > cov_val
         cov_val = temp_cov_val;
