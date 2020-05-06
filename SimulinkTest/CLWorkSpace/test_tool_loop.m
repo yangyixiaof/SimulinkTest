@@ -54,7 +54,7 @@ while 1
         break;
     end
 end
-% cvhtml('CoverageReport.html', cvdo);
+cvhtml('CoverageReport.html', all_cov);
 
 close_system(model);
 
