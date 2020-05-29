@@ -3,6 +3,11 @@ open_system(model);
 cov_val = 0.0;
 all_cov = [];
 
+test_dir = 'TestCases';
+if exist('TestCases','dir') == 0
+    mkdir('TestCases');
+end
+
 t1 = clock;
 while 1
     %generate test cases
@@ -41,14 +46,18 @@ while 1
     else
         all_cov = all_cov + cvdo;
     end
+    t2 = clock;
+    cost = etime(t2, t1);
+    
     cov = conditioninfo(all_cov, model);
     temp_cov_val = 100 * cov(1) / cov(2);
     if temp_cov_val > cov_val
         cov_val = temp_cov_val;
-        disp(strcat('Coverage Increased: ', num2str(cov_val)));
+        disp(strcat('Coverage Increased:', num2str(cov_val), '#Running Time:', num2str(cost)));
+        f_name = num2str(cost);
+        copyfile('t.mat', strcat(f_name, '.mat'), 'f');
+        movefile(strcat(f_name, '.mat'), test_dir);
     end
-    t2 = clock;
-    cost = etime(t2, t1);
     % disp(cost);
     if cost > test_time
         break;

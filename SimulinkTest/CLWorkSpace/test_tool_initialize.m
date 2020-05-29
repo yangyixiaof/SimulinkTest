@@ -12,7 +12,7 @@ specified_data_type = containers.Map();
 default_data_range = [-10,10];
 specified_data_range = containers.Map();
 
-test_time = 120;
+test_time = 7200;
 
 model = 'Control_Logic_b';
 
