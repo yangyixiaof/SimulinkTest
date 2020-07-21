@@ -5,6 +5,11 @@
 clear all
 clc
 
+cd POL_mfunction_interpreted;                  % 新規パス(IDOL)の設定
+np= cd;
+path(np, path);           % 新規パスを先頭に追加
+cd ..
+
 %% Simulation setting
 Start_time = 0;             % Simulation start time[sec]
 Stop_time = 200;            % Simulation stop time [sec]
