@@ -5,9 +5,9 @@ function [ ] = random_set_partial_sequence( t_data, t_set, f_set )
     while i < 100
         m = rem(i, 2);
         if m == 0
-            s = random_from_set(f_set);
+            s = int32(random_from_set(f_set));
         else
-            s = random_from_set(t_set);
+            s = int32(random_from_set(t_set));
         end
         e_end = start + s - 1;
         if e_end >= ll

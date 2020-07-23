@@ -15,7 +15,7 @@ for i=1:c_end
         func_name = r_cnts(1);
     end
 end
-disp(strcat(func_name, "====func_name"));
+% disp(strcat(func_name, "====func_name"));
 assert(~strcmp(func_name,""));
 % one = "function [func_name] = extract_function_name(scpt)";
 % % regexpi(one,'(?<=floor_num":2).*?(?=floor_num":3)','match');

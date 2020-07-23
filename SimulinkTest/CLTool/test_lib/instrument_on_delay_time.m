@@ -4,10 +4,10 @@ code_ini = "coder.extrinsic('run_info_recorder','extract_specified_element');";
 code_record = strcat('run_info_recorder(extract_specified_element(',ele_name,',',s_index,'));');
 
 codes = strsplit(code, '\n');
-idx = -1;
 c_end = length(codes);
+idx = -1;
 for i=1:c_end
-    one = strtrim(codes(i));
+    one = codes(i);
     idxs = regexpi(char(one), '^function((\s+\S+)|(\s*[))');
     if ~isempty(idxs)
 %         r_idxs = regexpi(one, '(?<=]\s*\=\s*).+');
@@ -20,7 +20,7 @@ for i=1:c_end
 end
 is_codes = codes;
 if idx > -1
-    should_cide_ini_code = codes(idx+1);
+    should_cide_ini_code = strtrim(codes(idx+1));
     if ~strcmp(should_cide_ini_code,code_ini)
        is_codes = [codes(1:idx) code_ini code_record codes(idx+1:c_end)]; 
     end
