@@ -53,7 +53,18 @@ branch_model = containers.Map;
 time_arr = [];
 cov_arr = [];
 
+interest_seeds = containers.Map;
+namelist = dir(strcat(InitialTestCasesDirectory, '/*.mat'));
+for i = 1:length(namelist)
+    name_i = namelist(i).name;
+    aoe_tsinghua_mhi_data = load(name_i);
+    interest_seeds(char(num2str(interest_seeds.Count))) = aoe_tsinghua_mhi_data;
+end
+disp("==== Initial test cases are loaded! ====");
+
 disp("==== Testing loop begins! ====");
+care_seed = [];
+care_seed_mutate_times = seed_mutate_times;
 
 t1 = clock;
 while 1
@@ -71,19 +82,34 @@ while 1
 %     end
 %     % test_ds = generate_random_time_series(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);
 %     save('t.mat', vars);
-    aoe_tsinghua_mhi_data = struct();
-    aoe_tsinghua_mhi_data.time = (Start_time:Sample_time:Stop_time)';
-%     t = Simulink.SimulationData.Dataset();
-    for i=1:length(names)
-%         var = strcat('test_sig', num2str(i));
-        name = names(i);
-        [t_data_type, t_data_shape, t_data_range] = choose_data_type_shape_range(name, specified_data_type, default_data_type, specified_data_dimension, default_data_dimension, specified_data_range, default_data_range);
-        ui = generate_random_time_series(t_data_type, t_data_shape, t_data_range, Start_time, Sample_time, Stop_time, constant_model);
-        aoe_tsinghua_mhi_data.signals(i).values = ui;
-        aoe_tsinghua_mhi_data.signals(i).dimensions = t_data_shape(2);
-%         u = [u ui];
-%         eval(strcat(var, ' = generate_random_time_series(names{i}, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time, constant_model);'));
-%         eval(strcat('t = t.addElement(', var, ',''', var, '''', ');'));
+    
+    if rand (1, 1) > mutate_probability
+        aoe_tsinghua_mhi_data = struct();
+        aoe_tsinghua_mhi_data.time = (Start_time:Sample_time:Stop_time)';
+    %     t = Simulink.SimulationData.Dataset();
+        for i=1:length(names)
+    %         var = strcat('test_sig', num2str(i));
+            name = names(i);
+            [t_data_type, t_data_shape, t_data_range] = choose_data_type_shape_range(name, specified_data_type, default_data_type, specified_data_dimension, default_data_dimension, specified_data_range, default_data_range);
+            ui = generate_random_time_series(t_data_type, t_data_shape, t_data_range, Start_time, Sample_time, Stop_time, constant_model);
+            aoe_tsinghua_mhi_data.signals(i).values = ui;
+            aoe_tsinghua_mhi_data.signals(i).dimensions = t_data_shape(2);
+    %         u = [u ui];
+    %         eval(strcat(var, ' = generate_random_time_series(names{i}, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time, constant_model);'));
+    %         eval(strcat('t = t.addElement(', var, ',''', var, '''', ');'));
+        end
+    else
+        % mutate the existing interesting seed
+        if isempty(care_seed)
+            care_seed = random_element_from_set(values(interest_seeds));
+        end
+        
+        aoe_tsinghua_mhi_data = mutate_seed(care_seed, care_seed_mutate_times);
+        
+        care_seed_mutate_times = care_seed_mutate_times - 1;
+        if care_seed_mutate_times == 0
+            care_seed = [];
+        end
     end
 %     save('t.mat', 't');
 
@@ -114,11 +140,13 @@ while 1
         cov_val = temp_cov_val;
         disp(strcat('Coverage Increased:', num2str(cov_val), '#Running Time:', num2str(cost)));
         f_name = num2str(cost);
-        copyfile('t.mat', strcat(f_name, '.mat'), 'f');
-        movefile(strcat(f_name, '.mat'), test_dir);
+        r_f_name = strcat(f_name, '.mat');
+        save(r_f_name, 'aoe_tsinghua_mhi_data');
+        movefile(r_f_name, test_dir);
+        interest_seeds(char(num2str(interest_seeds.Count))) = aoe_tsinghua_mhi_data;
     end
     % disp(cost);
-    disp(strcat('== one turn executed, coverage: ', num2str(cov_val), ' =='));
+    disp(strcat('== one turn executed, coverage: ', num2str(cov_val), ' == ', 'Running Time:', num2str(cost)), 's == ');
     
     time_arr = [time_arr cost];
     cov_arr = [cov_arr cov_val];

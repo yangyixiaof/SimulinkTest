@@ -19,7 +19,7 @@ Start_time = evalin('base','Start_time');
 Stop_time = evalin('base','Stop_time');
 Sample_time = evalin('base','Sample_time');
 % disp('==== split line ====');
-disp('==== setting up config, please wait ... ====');
+% disp('==== Setting up config, please wait ... ====');
 % disp(properties(activeConfigObj));
 % disp(isprop(activeConfigObj,'StartTime'));
 % disp(fieldnames(activeConfigObj));
@@ -48,7 +48,7 @@ set_param(activeConfigObj, 'ExternalInput', 'aoe_tsinghua_mhi_data');
 save_system(model);
 
 % disp(lei);
-disp('==== config has been set up ====');
+% disp('==== config has been set up ====');
 
 % lls = get_param(activeConfigObj, 'ExternalInput');
 

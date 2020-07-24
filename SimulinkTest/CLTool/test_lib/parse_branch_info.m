@@ -15,14 +15,14 @@ function [ constant_model, branch_model ] = parse_branch_info( rinfo )
                     constant_model(branch) = [];
                 end
                 tb_v = str2double(char(b_info(2)));
-                constant_model(branch) = [constant_model(branch); tb_v];
+                constant_model(branch) = [constant_model(branch) tb_v];
             else
                 if ~branch_model.isKey(branch)
                     branch_model(branch) = [];
                 end
                 v1 = str2double(char(b_info(2)));
                 v2 = str2double(char(b_info(3)));
-                branch_model(branch) = [branch_model(branch); [v1, v2]];
+                branch_model(branch) = [branch_model(branch) {v1, v2}];
             end
         end
     end
