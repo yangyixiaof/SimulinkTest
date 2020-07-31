@@ -83,14 +83,25 @@ while 1
 %     % test_ds = generate_random_time_series(names, specified_data_type, default_data_type, specified_data_shape, default_data_shape, specified_data_range, default_data_range, Start_time, Sample_time, Stop_time);
 %     save('t.mat', vars);
     
-    if rand (1, 1) > mutate_probability
+    dice = rand (1, 1);
+    if isempty(interest_seeds)
+        dice = 2.0; % obviously greater than 1.0
+    end
+    
+    t_meta = [];
+    for i=1:length(names)
+        name = names(i);
+        [t_data_type, t_data_shape, t_data_range] = choose_data_type_shape_range(name, specified_data_type, default_data_type, specified_data_dimension, default_data_dimension, specified_data_range, default_data_range);
+        t_meta = [t_meta; [t_data_type, t_data_shape, t_data_range]];
+    end
+    
+    if dice > mutate_probability
         aoe_tsinghua_mhi_data = struct();
         aoe_tsinghua_mhi_data.time = (Start_time:Sample_time:Stop_time)';
     %     t = Simulink.SimulationData.Dataset();
         for i=1:length(names)
     %         var = strcat('test_sig', num2str(i));
-            name = names(i);
-            [t_data_type, t_data_shape, t_data_range] = choose_data_type_shape_range(name, specified_data_type, default_data_type, specified_data_dimension, default_data_dimension, specified_data_range, default_data_range);
+            [t_data_type, t_data_shape, t_data_range] = t_meta(i);
             ui = generate_random_time_series(t_data_type, t_data_shape, t_data_range, Start_time, Sample_time, Stop_time, constant_model);
             aoe_tsinghua_mhi_data.signals(i).values = ui;
             aoe_tsinghua_mhi_data.signals(i).dimensions = t_data_shape(2);
@@ -101,10 +112,10 @@ while 1
     else
         % mutate the existing interesting seed
         if isempty(care_seed)
-            care_seed = random_element_from_set(values(interest_seeds));
+            care_seed = random_element_from_set(values(interest_seeds), 1);
         end
         
-        aoe_tsinghua_mhi_data = mutate_seed(care_seed, care_seed_mutate_times);
+        aoe_tsinghua_mhi_data = mutate_seed(t_meta, care_seed, care_seed_mutate_times);
         
         care_seed_mutate_times = care_seed_mutate_times - 1;
         if care_seed_mutate_times == 0

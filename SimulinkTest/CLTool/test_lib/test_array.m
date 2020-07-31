@@ -32,9 +32,33 @@ b.('b') = 4;
 disp(a);
 disp(b);
 
+disp('==== size of empty map ====');
+m = containers.Map();
+disp(size(m));
+disp(isempty(m));
+m('a') = [1, 2];
+disp(isempty(m));
 
+disp('====');
+a = [0 0 0 1 1 1 0 0 0];
+a(4:6) = 1- a(4:6);
+disp(a);
 
+A = randperm(10);
+disp(A);
 
+disp('== ==');
+ss = randi([1, 3], 1);
+se = randi([4, 6], 1);
+B = (ss:se);
+disp(B);
+
+C = [[1 2];[3 4];[5 6];[7 8]];
+disp(size(C));
+% C(4,:) = [9 10];
+D = m_bit_flip(C);
+disp(D);
+% disp(C(4,:));
 
 
 

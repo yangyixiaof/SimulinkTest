@@ -13,9 +13,9 @@ function test_sig = generate_random_time_series(t_data_type, t_data_shape, t_dat
     end
     switch (t_data_type)
         case {"single", "double"}
-            
+            % fft with an bn A0 randomly setting;
         case {"int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64"}
-            
+            % fft with an bn A0 randomly setting;
         case {"boolean"}
             t_set = [];
             if isKey(constant_model, 'Last_True')

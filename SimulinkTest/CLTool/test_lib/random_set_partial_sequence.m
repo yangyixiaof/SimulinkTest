@@ -6,9 +6,9 @@ function [ ] = random_set_partial_sequence( t_data, t_set, f_set )
     while i < 100
         m = rem(i, 2);
         if m == 0
-            s = int32(random_element_from_two_sets(f_set, randi([1, 5]))/Sample_time);
+            s = int32(random_element_from_two_sets(f_set, randi([1, 5]))/Sample_time, 1);
         else
-            s = int32(random_element_from_two_sets(t_set, randi([1, 5]))/Sample_time);
+            s = int32(random_element_from_two_sets(t_set, randi([1, 5]))/Sample_time, 1);
         end
         e_end = start + s - 1;
         if e_end >= ll
