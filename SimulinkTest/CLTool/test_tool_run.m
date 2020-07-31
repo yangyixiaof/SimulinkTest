@@ -88,11 +88,11 @@ while 1
         dice = 2.0; % obviously greater than 1.0
     end
     
-    t_meta = [];
+    t_meta = cell(length(names),3);
     for i=1:length(names)
         name = names(i);
         [t_data_type, t_data_shape, t_data_range] = choose_data_type_shape_range(name, specified_data_type, default_data_type, specified_data_dimension, default_data_dimension, specified_data_range, default_data_range);
-        t_meta = [t_meta; [t_data_type, t_data_shape, t_data_range]];
+        t_meta(i,:) = {t_data_type, t_data_shape, t_data_range};
     end
     
     if dice > mutate_probability
@@ -101,7 +101,10 @@ while 1
     %     t = Simulink.SimulationData.Dataset();
         for i=1:length(names)
     %         var = strcat('test_sig', num2str(i));
-            [t_data_type, t_data_shape, t_data_range] = t_meta(i);
+            t_meta_i = t_meta(i,:);
+            t_data_type = t_meta_i{1};
+            t_data_shape = t_meta_i{2};
+            t_data_range = t_meta_i{3};
             ui = generate_random_time_series(t_data_type, t_data_shape, t_data_range, Start_time, Sample_time, Stop_time, constant_model);
             aoe_tsinghua_mhi_data.signals(i).values = ui;
             aoe_tsinghua_mhi_data.signals(i).dimensions = t_data_shape(2);
@@ -157,7 +160,7 @@ while 1
         interest_seeds(char(num2str(interest_seeds.Count))) = aoe_tsinghua_mhi_data;
     end
     % disp(cost);
-    disp(strcat('== one turn executed, coverage: ', num2str(cov_val), ' == ', 'Running Time:', num2str(cost)), 's == ');
+    disp(strcat('== one turn executed, coverage: ', num2str(cov_val), ' == ', 'Running Time:', num2str(cost), 's == '));
     
     time_arr = [time_arr cost];
     cov_arr = [cov_arr cov_val];

@@ -1,20 +1,21 @@
-function [ ] = random_set_partial_sequence( t_data, t_set, f_set )
+function [ ret ] = random_set_partial_sequence( t_data, t_set, f_set )
     Sample_time = evalin('base', 'Sample_time');
+    ret = t_data;
     ll = length(t_data);
     i = round(rand());
     start = 1;
     while i < 100
         m = rem(i, 2);
         if m == 0
-            s = int32(random_element_from_two_sets(f_set, randi([1, 5]))/Sample_time, 1);
+            s = int32(random_element_from_two_sets(f_set, randi([1, 5]), 1)/Sample_time);
         else
-            s = int32(random_element_from_two_sets(t_set, randi([1, 5]))/Sample_time, 1);
+            s = int32(random_element_from_two_sets(t_set, randi([1, 5]), 1)/Sample_time);
         end
         e_end = start + s - 1;
         if e_end >= ll
             e_end = ll;
         end
-        t_data(start : e_end) = m;
+        ret(start : e_end) = m;
         start = e_end + 1;
         i = i + 1;
         if start > ll

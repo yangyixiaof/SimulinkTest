@@ -25,7 +25,8 @@ function test_sig = generate_random_time_series(t_data_type, t_data_shape, t_dat
             if isKey(constant_model, 'Last_False')
                 f_set = constant_model('Last_False');
             end
-            random_set_partial_sequence(t_data, t_set, f_set);
+            t_data = random_set_partial_sequence(t_data, t_set, f_set);
+            assert(~isempty(t_data));
         otherwise
             assert(0, strcat("strange error! uncognized type:", t_data_type));
     end
