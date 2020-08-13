@@ -1,28 +1,48 @@
-function [ ret ] = random_set_partial_sequence( t_data, t_set, f_set )
-    Sample_time = evalin('base', 'Sample_time');
+function [ ret ] = random_set_partial_sequence( t_data, constant_model )
     ret = t_data;
-    ll = length(t_data);
-    i = round(rand());
+    if isempty(constant_model)
+%         disp('== partial set not executed! ==');
+        return;
+    end
+    
+    cks = keys(constant_model);
+    to_skip = 0;
+    if length(cks) == 1
+        to_skip = 1;
+    end
+    Sample_time = evalin('base', 'Sample_time');
+    td_len = length(t_data);
     start = 1;
-    while i < 100
-        m = rem(i, 2);
-        if m == 0
-            s = int32(random_element_from_two_sets(f_set, randi([1, 5]), 1)/Sample_time);
-        else
-            s = int32(random_element_from_two_sets(t_set, randi([1, 5]), 1)/Sample_time);
-        end
+    while 1
+%         m = rem(i, 2);
+%         if m == 0
+%             s = int32(random_element_from_two_sets(f_set, randi([1, 5]), 1)/Sample_time);
+%         else
+%             s = int32(random_element_from_two_sets(t_set, randi([1, 5]), 1)/Sample_time);
+%         end
+        ck = random_element_from_set(cks, 1);
+        ck = ck{1};
+%         disp('== ==');
+%         disp(cks);
+%         disp('|| ||');
+%         disp(class(ck));
+%         disp(ck);
+%         disp(class(ck{1}));
+%         disp(ck{1});
+        s = int32(random_element_from_two_sets(constant_model(ck), randi([1, 5]), 1)/Sample_time);
         e_end = start + s - 1;
-        if e_end >= ll
-            e_end = ll;
+        if e_end >= td_len
+            e_end = td_len;
         end
-        ret(start : e_end) = m;
+        ret(start : e_end) = str2num(ck);
         start = e_end + 1;
-        i = i + 1;
-        if start > ll
+        if to_skip
+            start = start + randi([1,(td_len-start)/2],1);
+        end
+        if start > td_len
             break;
         end
     end
-    
 %     ll = length(t_data);
 %     sf_l = ll - f_l;
 %     t_l_satisfied = 0;

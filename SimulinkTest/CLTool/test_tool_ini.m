@@ -21,12 +21,13 @@ seed_mutate_times = 2;
 minimum_data = -10;
 maximum_data = 10;
 
-InitialTestCasesDirectory = "InitialTestCases";
-mutate_probability = 0.0;
+InitialTestCasesDirectory = "TestCases";
+mutate_probability = 0.5;
+simple_taint_analysis_probability = 0.5;
 
 immutate_vars = ["Start_time","Stop_time","Sample_time"];
 
-s_config = {["ONDLC" "u" "2"], ["OFDLC" "u" "2"], ["OSHOTC" "u" "2"], ["#" "#" "#"]};
+s_config = {["ONDLC" "u" "2" "[0 1]"], ["OFDLC" "u" "2" "[0 1]"], ["OSHOTC" "u" "2" "[0 1]"], ["#" "#" "#" "#"]};
 
 
 

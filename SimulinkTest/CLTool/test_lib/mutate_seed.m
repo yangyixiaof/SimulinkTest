@@ -5,16 +5,28 @@ aoe_tsinghua_mhi_data = care_seed;
 s_len = length(aoe_tsinghua_mhi_data.signals);
 rp = randperm(s_len);
 % disp(rp);
+% disp(size(aoe_tsinghua_mhi_data.signals));
 b = aoe_tsinghua_mhi_data.signals(rp);
-c = seed_meta(rp);
+% disp(size(b));
+c = seed_meta(rp,:);
 r_num = unidrnd(s_len);
 eles = b(1:r_num);
-eles_meta = c(1:r_num);
+eles_meta = c(1:r_num,:);
+% disp(size(seed_meta));
+% disp(size(eles_meta));
 
 for i=1:length(eles)
     ele = eles(i);
-    [type, shape, range] = eles_meta(i);
-    
+    t_meta_i = eles_meta(i,:);
+	type = t_meta_i{1};
+%     disp(class(type));
+%     disp(type);
+	shape = t_meta_i{2};
+%     disp(class(shape));
+%     disp(shape);
+	range = t_meta_i{3};
+%     disp(class(range));
+%     disp(range);
     % mutate ele.values based on ele.dimensions
     % boolean bit flip (random sequential range, random non-sequential range)    
     % all types, 1. force line (random, zero, minimum, maximum); 2. range +1, +2, ...; 

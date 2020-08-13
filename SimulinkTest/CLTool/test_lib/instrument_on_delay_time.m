@@ -1,7 +1,7 @@
-function [is_code] = instrument_on_delay_time(code,ele_name,s_index)
+function [is_code] = instrument_on_delay_time(code,ele_name,s_index,mode)
 
 code_ini = "coder.extrinsic('run_info_recorder','extract_specified_element');";
-code_record = strcat('run_info_recorder(extract_specified_element(',ele_name,',',s_index,'));');
+code_record = strcat('run_info_recorder(extract_specified_element(',ele_name,',',s_index,'),',mode,');');
 
 codes = strsplit(code, '\n');
 c_end = length(codes);
@@ -23,6 +23,8 @@ if idx > -1
     should_cide_ini_code = strtrim(codes(idx+1));
     if ~strcmp(should_cide_ini_code,code_ini)
        is_codes = [codes(1:idx) code_ini code_record codes(idx+1:c_end)]; 
+    else
+       is_codes = [codes(1:idx) code_ini code_record codes(idx+3:c_end)]; 
     end
 end
 % is_code = code;

@@ -11,24 +11,38 @@ function test_sig = generate_random_time_series(t_data_type, t_data_shape, t_dat
         t_data = [t_data; generate_random_atom(t_data_type, t_data_shape, t_data_range)];
         % rand(t_data_shape);
     end
-    switch (t_data_type)
-        case {"single", "double"}
-            % fft with an bn A0 randomly setting;
-        case {"int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64"}
-            % fft with an bn A0 randomly setting;
-        case {"boolean"}
-            t_set = [];
-            if isKey(constant_model, 'Last_True')
-                t_set = constant_model('Last_True');
-            end
-            f_set = [];
-            if isKey(constant_model, 'Last_False')
-                f_set = constant_model('Last_False');
-            end
-            t_data = random_set_partial_sequence(t_data, t_set, f_set);
-            assert(~isempty(t_data));
-        otherwise
-            assert(0, strcat("strange error! uncognized type:", t_data_type));
+    
+%     switch (t_data_type)
+%         case {"single", "double"}
+%             fft with an bn A0 randomly setting;
+%             if dice < 0.2
+%                 to_partial_set = 1;
+%             end
+%         case {"int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64"}
+%             fft with an bn A0 randomly setting;
+%             if dice < 0.2
+%                 to_partial_set = 1;
+%             end
+%         case {"boolean"}
+%             t_set = [];
+%             if isKey(constant_model, 'Last_True')
+%                 t_set = constant_model('Last_True');
+%             end
+%             f_set = [];
+%             if isKey(constant_model, 'Last_False')
+%                 f_set = constant_model('Last_False');
+%             end
+%             t_data = random_set_partial_sequence(t_data, t_set, f_set);
+%             assert(~isempty(t_data));
+%         otherwise
+%             assert(0, strcat("strange error! uncognized type:", t_data_type));
+%     end
+    
+    dice = rand();
+    simple_ta_prob = evalin('base', 'simple_taint_analysis_probability');
+    if dice < simple_ta_prob
+        t_data = random_set_partial_sequence(t_data, constant_model);
+        assert(~isempty(t_data));
     end
     
     eval_cmd = strcat(t_data_type, '(t_data)');

@@ -10,19 +10,29 @@ function [ constant_model, branch_model ] = parse_branch_info( rinfo )
             b_info = strsplit(r, '#');
 %             disp(b_info);
             branch = char(b_info(1));
-            if length(b_info) == 2
-                if ~constant_model.isKey(branch)
-                    constant_model(branch) = [];
+%             disp('branch');
+%             disp(branch);
+            bs = str2num(branch);
+%             disp('bs');
+%             disp(bs);
+            for j=1:length(bs)
+                b_j = num2str(bs(j));
+%                 disp('b_j');
+%                 disp(b_j);
+                if length(b_info) == 2
+                    if ~constant_model.isKey(b_j)
+                        constant_model(b_j) = [];
+                    end
+                    tb_v = str2double(char(b_info(2)));
+                    constant_model(b_j) = [constant_model(b_j) tb_v];
+                else
+                    if ~branch_model.isKey(b_j)
+                        branch_model(b_j) = [];
+                    end
+                    v1 = str2double(char(b_info(2)));
+                    v2 = str2double(char(b_info(3)));
+                    branch_model(b_j) = [branch_model(b_j) {v1, v2}];
                 end
-                tb_v = str2double(char(b_info(2)));
-                constant_model(branch) = [constant_model(branch) tb_v];
-            else
-                if ~branch_model.isKey(branch)
-                    branch_model(branch) = [];
-                end
-                v1 = str2double(char(b_info(2)));
-                v2 = str2double(char(b_info(3)));
-                branch_model(branch) = [branch_model(branch) {v1, v2}];
             end
         end
     end

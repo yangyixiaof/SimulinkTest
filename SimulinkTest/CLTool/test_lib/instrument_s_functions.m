@@ -18,6 +18,7 @@ for i = 1:length(s_funcs)
     to_instruct = 0;
     ele_name = "";
     s_index = "";
+    mode = "";
 %     disp(length(s_config));
     HsFcn = sf.find('Path',AFsFcn.Path,'-isa','Stateflow.EMChart');
     func_name = extract_function_name(HsFcn.Script);
@@ -35,11 +36,12 @@ for i = 1:length(s_funcs)
 %             ele_name = ele_name{1};
             s_index = o_conf(3);
 %             s_index = s_index{1};
+            mode = o_conf(4);
         end
     end
     if to_instruct
         disp(strcat("Instrument: ", AFsFcn.Path, '/', char(func_name)));
-        HsFcn.Script = instrument_on_delay_time(HsFcn.Script, ele_name, s_index);
+        HsFcn.Script = instrument_on_delay_time(HsFcn.Script, ele_name, s_index, mode);
     end
 %     disp(HsFcn);
 %     HsFcn.Script = strcat(HsFcn.Script, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
