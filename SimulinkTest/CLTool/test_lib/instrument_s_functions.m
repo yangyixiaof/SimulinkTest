@@ -40,7 +40,7 @@ for i = 1:length(s_funcs)
         end
     end
     if to_instruct
-        disp(strcat("Instrument: ", AFsFcn.Path, '/', char(func_name)));
+        disp(strcat("Discover and Handle m function: ", AFsFcn.Path, '/', char(func_name)));
         HsFcn.Script = instrument_on_delay_time(HsFcn.Script, ele_name, s_index, mode);
     end
 %     disp(HsFcn);

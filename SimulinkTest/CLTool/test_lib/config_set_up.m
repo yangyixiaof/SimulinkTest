@@ -31,12 +31,13 @@ Sample_time = evalin('base','Sample_time');
 % disp(activeConfigObj.Components(1).Name);
 % disp(get_param(activeConfigObj,'FixedStep'));
 % disp(get_param(activeConfigObj,'Solver'));
-
-set_param(activeConfigObj,'StartTime',char(num2str(Start_time)));
-set_param(activeConfigObj,'StopTime',char(num2str(Stop_time)));
-set_param(activeConfigObj,'Solver','FixedStepDiscrete');
-set_param(activeConfigObj,'SolverType','Fixed-step');
-set_param(activeConfigObj,'FixedStep',char(num2str(Sample_time)));
+if evalin('base','origin_config_ok')
+    set_param(activeConfigObj,'StartTime',char(num2str(Start_time)));
+    set_param(activeConfigObj,'StopTime',char(num2str(Stop_time)));
+    set_param(activeConfigObj,'Solver','FixedStepAuto');
+    set_param(activeConfigObj,'SolverType','Fixed-step');
+    set_param(activeConfigObj,'FixedStep',char(num2str(Sample_time)));
+end
 
 lei = get_param(activeConfigObj, 'LoadExternalInput');
 if strcmp(lei, 'off')

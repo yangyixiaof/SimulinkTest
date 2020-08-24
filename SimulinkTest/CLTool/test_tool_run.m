@@ -1,5 +1,7 @@
 % first phase, set up parameters
-addpath('test_lib');
+
+% split line, the following are real execution logic. 
+% logic of initializing. 
 
 run_info = '';
 
@@ -11,18 +13,6 @@ default_data_range = [minimum_data,maximum_data];
 specified_data_range = containers.Map();
 
 % second phase, set up config and extract model infomation
-open_system(model);
-config_set_up(model);
-close_system(model);
-
-disp("==== Configurations are set! ====");
-
-open_system(model);
-instrument_s_functions(model, s_config);
-close_system(model);
-
-disp("==== Files are instrumented! ====");
-
 open_system(model);
 find_undefined_variables(model);
 vars = find_mutate_variables(model, immutate_vars);
@@ -184,7 +174,7 @@ while 1
 end
 cvhtml('CoverageReport.html', all_cov);
 save('rt_cov.mat', 'time_arr', 'cov_arr');
-
+plot(time_arr, cov_arr);
 close_system(model);
 
 

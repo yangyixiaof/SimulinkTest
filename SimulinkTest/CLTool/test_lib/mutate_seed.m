@@ -9,7 +9,7 @@ rp = randperm(s_len);
 b = aoe_tsinghua_mhi_data.signals(rp);
 % disp(size(b));
 c = seed_meta(rp,:);
-r_num = unidrnd(s_len);
+r_num = randi(s_len);
 eles = b(1:r_num);
 eles_meta = c(1:r_num,:);
 % disp(size(seed_meta));

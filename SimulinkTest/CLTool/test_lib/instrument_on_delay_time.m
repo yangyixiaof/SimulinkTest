@@ -1,5 +1,7 @@
 function [is_code] = instrument_on_delay_time(code,ele_name,s_index,mode)
 
+instrument_s_flag = evalin('base', 'instrument_s_flag');
+
 code_ini = "coder.extrinsic('run_info_recorder','extract_specified_element');";
 code_record = strcat('run_info_recorder(extract_specified_element(',ele_name,',',s_index,'),',mode,');');
 
@@ -22,9 +24,19 @@ is_codes = codes;
 if idx > -1
     should_cide_ini_code = strtrim(codes(idx+1));
     if ~strcmp(should_cide_ini_code,code_ini)
-       is_codes = [codes(1:idx) code_ini code_record codes(idx+1:c_end)]; 
+        switch instrument_s_flag
+        case 1
+            is_codes = [codes(1:idx) code_ini code_record codes(idx+1:c_end)];
+        case 2
+            is_codes = [codes(1:idx) codes(idx+1:c_end)];
+        end
     else
-       is_codes = [codes(1:idx) code_ini code_record codes(idx+3:c_end)]; 
+        switch instrument_s_flag
+        case 1
+            is_codes = [codes(1:idx) code_ini code_record codes(idx+3:c_end)];
+        case 2
+            is_codes = [codes(1:idx) codes(idx+3:c_end)];
+        end
     end
 end
 % is_code = code;

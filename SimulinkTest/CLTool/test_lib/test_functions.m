@@ -3,6 +3,8 @@
 clear;
 clc;
 
+origin_config_ok = 1;
+
 run_info = '';
 
 Start_time = 0;
@@ -10,7 +12,9 @@ Stop_time = 5;
 Sample_time = 1;
 
 model = 'test';
-s_config = {[".*fcn$" "u" "2"], ["#" "#" "#"]};
+
+instrument_s_flag = 1;
+s_config = {["fcn" "u" "2" "[0 1]"], ["OFDLC" "u" "2" "[0 1]"], ["OSHOTC" "u" "2" "[0 1]"], ["#" "#" "#" "#"]};
 
 % eval([model,'([],[],[],''term'')']);
 % set_param(model, 'SimulationCommand', 'stop');

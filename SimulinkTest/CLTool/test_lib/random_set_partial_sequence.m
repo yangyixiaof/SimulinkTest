@@ -11,7 +11,8 @@ function [ ret ] = random_set_partial_sequence( t_data, constant_model )
         to_skip = 1;
     end
     Sample_time = evalin('base', 'Sample_time');
-    td_len = length(t_data);
+    td_len = size(t_data);
+    td_len = td_len(1);
     start = 1;
     while 1
 %         m = rem(i, 2);
@@ -29,12 +30,12 @@ function [ ret ] = random_set_partial_sequence( t_data, constant_model )
 %         disp(ck);
 %         disp(class(ck{1}));
 %         disp(ck{1});
-        s = int32(random_element_from_two_sets(constant_model(ck), randi([1, 5]), 1)/Sample_time);
+        s = int32(random_element_from_two_sets(constant_model(ck), randi([1, td_len]), 1)/Sample_time);
         e_end = start + s - 1;
         if e_end >= td_len
             e_end = td_len;
         end
-        ret(start : e_end) = str2num(ck);
+        ret(start : e_end, :) = str2num(ck);
         start = e_end + 1;
         if to_skip
             start = start + randi([1,(td_len-start)/2],1);

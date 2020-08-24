@@ -39,7 +39,18 @@ else
     disp('222');
 end
 
+disp('== split line ==');
+vv = 0; %#ok<NASGU>
+vv = eval('vv');
+disp(vv);
+vvv = eval('0');
+disp(vvv);
 
+disp('== test randi ==');
+ri = randi(15);
+disp(ri);
+disp(size(ri));
+disp(randperm(15));
 
 
 
